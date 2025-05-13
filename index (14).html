@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download</title>
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #E0F7FA;
+            font-family: 'El Messiri', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #26C6DA;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(38, 198, 218, 0.3);
+        }
+
+        .download-btn:hover {
+            background-color: #00ACC1;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .download-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        h1 {
+            color: #006064;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .lottie-container {
+            max-width: 300px;
+            margin: 0 auto 30px auto;
+            position: relative;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #26C6DA;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .water-wave {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(38, 198, 218, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .download-effect {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #26C6DA;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="lottie-container">
+            <lottie-player 
+                src="https://assets3.lottiefiles.com/packages/lf20_3rwasyjy.json" 
+                background="transparent" 
+                speed="1" 
+                style="width: 100%; height: 100%;" 
+                loop 
+                autoplay>
+            </lottie-player>
+        </div>
+        <button class="download-btn" onclick="startDownload()">
+            <span class="download-icon">↓</span> Download Now
+        </button>
+    </div>
+
+    <script>
+  
+        gsap.from(".title", { 
+            duration: 1, 
+            y: -100, 
+            opacity: 0, 
+            ease: "bounce" 
+        }); 
+
+        gsap.from(".lottie-container", { 
+            duration: 1.5, 
+            opacity: 0, 
+            y: 50, 
+            ease: "power2.out" 
+        }); 
+
+        gsap.from(".download-btn", { 
+            duration: 1, 
+            y: 100, 
+            opacity: 0, 
+            ease: "power2.out" 
+        }); 
+
+       // Made By @enzosrs
+
+        const btn = document.querySelector(".download-btn");
+        btn.addEventListener("click", function(e) {
+            const ripple = document.createElement("span");
+            ripple.classList.add("ripple");
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + "px";
+            ripple.style.left = e.clientX - rect.left - size / 2 + "px";
+            ripple.style.top = e.clientY - rect.top - size / 2 + "px";
+            btn.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }); 
+
+        btn.addEventListener("mouseenter", () => {
+            gsap.to(".download-icon", { 
+                y: -5, 
+                duration: 0.3, 
+                ease: "power2.out" 
+            }); 
+        });
+
+        btn.addEventListener("mouseleave", () => {
+            gsap.to(".download-icon", { 
+                y: 0, 
+                duration: 0.3, 
+                ease: "power2.out" 
+            }); 
+        });
+
+         // Made By @enzosrs
+        function createParticle() {
+            const particle = document.createElement("div");
+            particle.className = "particle";
+            document.body.appendChild(particle);
+
+            gsap.set(particle, {
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                width: Math.random() * 10 + 5,
+                height: Math.random() * 10 + 5
+            }); 
+
+            gsap.to(particle, {
+                duration: Math.random() * 2 + 1,
+                x: "+=50",
+                y: "-=100",
+                opacity: 0,
+                ease: "sine.out",
+                onComplete: () => particle.remove()
+            }); 
+        }
+
+        setInterval(createParticle, 200); 
+
+      
+        function createWaterWave(x, y) {
+            const wave = document.createElement("div");
+            wave.className = "water-wave";
+            document.body.appendChild(wave);
+
+            gsap.set(wave, {
+                x: x - 100,
+                y: y - 100,
+                opacity: 1
+            }); 
+
+            gsap.to(wave, {
+                duration: 2,
+                width: 300,
+                height: 300,
+                opacity: 0,
+                ease: "sine.out",
+                onComplete: () => wave.remove()
+            }); 
+
+            gsap.to(wave, {
+                duration: 1,
+                x: "+=20",
+                y: "-=20",
+                repeat: 1,
+                yoyo: true,
+                ease: "sine.inOut"
+            }); 
+        }
+
+        setInterval(() => createWaterWave(Math.random() * window.innerWidth, Math.random() * window.innerHeight), 1000); // 13
+
+         // Made By @enzosrs
+        function startDownload() {
+            const fileUrl = "https://github.com/enzosrs/S3-Alpha/raw/refs/heads/main/S3%20ALPHA.apk";
+            const fileName = "S3 Alpha.apk";
+            const rect = btn.getBoundingClientRect();
+            const btnX = rect.left + rect.width / 2;
+            const btnY = rect.top + rect.height / 2;
+
+            
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+         
+            createWaterWave(btnX, btnY); 
+
+          
+            for (let i = 0; i < 10; i++) {
+                const effect = document.createElement("div");
+                effect.className = "download-effect";
+                document.body.appendChild(effect);
+
+                gsap.set(effect, {
+                    x: btnX - 10,
+                    y: btnY - 10
+                }); 
+
+                gsap.to(effect, {
+                    duration: 1,
+                    x: btnX + (Math.random() - 0.5) * 100,
+                    y: btnY + (Math.random() - 0.5) * 100,
+                    opacity: 0,
+                    ease: "power2.out",
+                    onComplete: () => effect.remove()
+                }); 
+            }
+
+            // Made By @enzosrs
+            gsap.to(".download-btn", {
+                boxShadow: "0 0 20px rgba(38, 198, 218, 0.8)",
+                duration: 0.5,
+                repeat: 1,
+                yoyo: true,
+                ease: "sine.inOut"
+            }); 
+
+            
+            gsap.to(".download-icon", {
+                y: -10,
+                duration: 0.3,
+                repeat: 3,
+                yoyo: true,
+                ease: "power2.out"
+            }); 
+
+           
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const ripple = document.createElement("span");
+                    ripple.classList.add("ripple");
+                    const size = Math.max(rect.width, rect.height) * (1 + i * 0.5);
+                    ripple.style.width = ripple.style.height = size + "px";
+                    ripple.style.left = rect.width / 2 - size / 2 + "px";
+                    ripple.style.top = rect.height / 2 - size / 2 + "px";
+                    btn.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                }, i * 150);
+            } 
+            // Made By @enzosrs
+           
+            const flash = document.createElement("div");
+            flash.style.cssText = "position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(38, 198, 218, 0.2); pointer-events: none;";
+            document.body.appendChild(flash);
+            gsap.to(flash, {
+                duration: 0.5,
+                opacity: 0,
+                ease: "power2.out",
+                onComplete: () => flash.remove()
+            }); 
+
+           
+            for (let i = 0; i < 5; i++) {
+                const waveParticle = document.createElement("div");
+                waveParticle.className = "particle";
+                document.body.appendChild(waveParticle);
+
+                gsap.set(waveParticle, {
+                    x: btnX,
+                    y: btnY
+                }); 
+
+                gsap.to(waveParticle, {
+                    duration: 1.5,
+                    x: btnX + Math.cos(i * Math.PI / 2.5) * 80,
+                    y: btnY + Math.sin(i * Math.PI / 2.5) * 80,
+                    opacity: 0,
+                    ease: "sine.out",
+                    onComplete: () => waveParticle.remove()
+                }); 
+            }
+        }
+
+        // Made By @enzosrs
+        gsap.to(".title", {
+            color: "#00ACC1",
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        }); 
+
+        gsap.to(".title", {
+            textShadow: "0 0 10px rgba(38, 198, 218, 0.7)",
+            duration: 1.5,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        }); 
+
+        gsap.to(".download-btn", {
+            boxShadow: "0 6px 20px rgba(38, 198, 218, 0.5)",
+            duration: 1,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        }); 
+
+        gsap.to(".download-btn", {
+            borderRadius: "30px",
+            duration: 1,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        }); 
+
+        gsap.to(".title", {
+            letterSpacing: "2px",
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        }); 
+    </script>
+</body>
+</html>
