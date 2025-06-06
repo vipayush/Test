@@ -7,18 +7,16 @@ from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandle
 # Replace this with your actual bot token from BotFather
 BOT_TOKEN = "7681136625:7672162651:AAGXapmAVmmqpdUaYrY0bJSxa4mQyVFAVew"
 
-# Replace this with your Telegram channel username (must be public)
-CHANNEL_USERNAME = "@FREEVIPHACK22"
+# Replace this with your Telegram channel username (must be publicUSERNAME = "@FREEVIPHACK22"
 
-# Generate period number and BIG/SMALL prediction
-def get_prediction():
-    result = random.choice(["BIG", "SMALL"])
-    now_utc = datetime.datetime.now(pytz.UTC)
-    period_number = now_utc.strftime('%Y%m%d') + "1000" + str(10001 + now_utc.hour * 60 + now_utc.minute)
-    return period_number, result
+# Generate per
+def get_pre
+    result =IG", "SMALL"])
+    now_utc tetime.now(pytz.UTC)
+    period_number = now_utc.strftime('%Y%m result
 
 # /start handler with channel membership check
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def start(update: Update, context: Contypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     chat_id = update.effective_chat.id
 
